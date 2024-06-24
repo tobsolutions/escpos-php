@@ -12,6 +12,7 @@ try {
     
     /* Print a "Hello world" receipt" */
     $printer = new Printer($connector);
+    $printer -> setJustification(Printer::JUSTIFY_CENTER);
     $printer -> text("Hello World!\n");
     $printer -> cut();
     
