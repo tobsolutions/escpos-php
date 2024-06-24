@@ -1,6 +1,6 @@
 <?php
 /* Change to the correct path if you copy this example! */
-require __DIR__ . '/../../vendor/autoload.php';
+require __DIR__ . '/../vendor/autoload.php';
 use Mike42\Escpos\Printer;
 use Mike42\Escpos\PrintConnectors\NetworkPrintConnector;
 
@@ -13,7 +13,19 @@ try {
     /* Print a "Hello world" receipt" */
     $printer = new Printer($connector);
     $printer -> setJustification(Printer::JUSTIFY_CENTER);
-    $printer -> text("Hello World!\n");
+    $printer -> setTextSize(1, 1);
+    $printer -> text("Musikvereinigung Tiefenbach\n");
+    $printer -> text("Brotzeitabend 2024\n");
+    $printer -> feed();
+    $printer -> setTextSize(3, 3);
+    $printer -> text("Wurstsalat\n");
+    $printer -> feed();
+    $printer -> setTextSize(2, 2);
+    $printer -> text("3,50 EUR\n");
+    $printer -> feed();
+    $printer -> setTextSize(1, 1);
+    $printer -> text(date("d.m.Y H:i:s")."\n");
+    $printer -> feed(3);
     $printer -> cut();
     
     /* Close printer */
