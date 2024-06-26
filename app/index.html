@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en" data-bs-theme="auto">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+    <meta name="generator" content="Hugo 0.122.0">
+    <title>Festkasse</title>    
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body class="py-4" style="height: 100vh;">    
+    <main>
+      <div class="container-artikel" id="container-artikel">
+        <!--<div class="row">
+          <div class="col">
+            <button class="artikel">Test</button>
+          </div>
+          <div class="col">
+            <button class="artikel" value="Schweizer Wurstsalat" price=3.50>Schweizer Wurstsalat</button>
+          </div>
+          <div class="col">
+            <button class="artikel">Test</button>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <button class="artikel">Test</button>
+          </div>
+          <div class="col">
+            <button class="artikel">Test</button>
+          </div>
+          <div class="col">
+            <button class="artikel">Test</button>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">.col-4</div>
+          <div class="col">.col-4</div>
+          <div class="col">.col-4</div>
+        </div>-->
+      </div>
+    </main>
+    <nav class="navbar-fixed-bottom">
+      <a class="nav-link" aria-current="page" href="#">Home</a>
+      <a class="nav-link" href="#">Link</a>
+      <a class="nav-link" aria-disabled="true" href="#">Disabled</a>
+    </nav>
+  </body>
+  <script src="../vendor/components/jquery/jquery.js"></script>
+  <script>
+    Array.prototype.max = function() {
+      return Math.max.apply(null, this);
+    };
+    const formatEUR = new Intl.NumberFormat('de-DE', {
+      style: 'currency',
+      currency: 'EUR', 
+      currencyDisplay: "code" 
+    });
+
+    var json = (function() {
+      var json = null;
+      $.ajax({
+        'async': false,
+        'global': false,
+        'url': "./artikel.json",
+        'dataType': "json",
+        'success': function(data) {
+          json = data;
+        }
+      });
+      return json;
+    })();
+    console.log(json);
+    var maxzeile_arr = [];
+    var maxspalte = json.length;
+    for(spalte=0;spalte<maxspalte;spalte++){
+      console.log(json[spalte]);
+      maxzeile_arr.push(json[spalte].elemente.length);
+    }
+    console.log(maxzeile_arr);
+    console.log(maxzeile_arr.max());
+    var maxzeile = maxzeile_arr.max();
+    console.log("maxzeile: " + maxzeile);
+    console.log("maxspalte: " + maxspalte);
+    
+    var containerartikel = "<div class='row-header'>"; 
+    for(spalte=0;spalte<maxspalte;spalte++){
+      containerartikel = containerartikel + "<div class='col'><p>" +json[spalte].kategorie + "</p></div>";
+    }    
+    containerartikel = containerartikel + "</div>";
+    for(zeile=0;zeile<maxzeile;zeile++){
+      var containerartikelzeile = "";
+      for(spalte=0;spalte<maxspalte;spalte++){
+        containerartikelzeile = containerartikelzeile + "<div class='col'><button class='artikel' value='"+spalte+"-"+zeile+"'><span class='artikeltext'>" + json[spalte].elemente[zeile].artikel + "</span> <span class='artikelpreis'>" + formatEUR.format(json[spalte].elemente[zeile].preis) + "</span></button></div>"
+      }
+      containerartikel = containerartikel + "<div class='row'>" + containerartikelzeile + "</div>";
+    }
+    $('#container-artikel').html(
+      containerartikel
+    );
+
+    $(document).ready(function(){
+      $('.artikel').click(function(){
+        $.ajax({
+          url: '../php/print-network.php?artikel=' + json[$(this).val().split('-')[0]].elemente[$(this).val().split('-')[1]].artikel + "&preis=" + formatEUR.format(json[$(this).val().split('-')[0]].elemente[$(this).val().split('-')[1]].preis),
+          success: function(data) {
+            if(data != ""){
+              alert(data)
+            };
+          },
+          error: function() {
+            alert("Unbestimmter Fehler");
+          }
+        });
+        //alert("print: " + '../php/print-network.php?artikel=' + $(this).val() + "&preis=" + $(this).price);
+        
+      })
+    })
+  </script>
+</html>

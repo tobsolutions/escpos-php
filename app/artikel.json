@@ -1,0 +1,46 @@
+[
+    {
+        "kategorieid":1,
+        "kategorie":"Speisen",
+        "elemente":
+        [
+            {
+                "id":1,
+                "artikel":"Wurstsalat",
+                "preis":3.50
+            },
+            {
+                "id":2,
+                "artikel":"Schweizer Wurstsalat",
+                "preis":3.70
+            },
+            {
+                "id":2,
+                "artikel":"Schweizer Wurstsalat",
+                "preis":3.70
+            }
+        ]
+    },
+    {
+        "kategorieid":2,
+        "kategorie":"Getränke",
+        "elemente":
+        [
+            {
+                "id":1,
+                "artikel":"Bier",
+                "preis":3.00
+            },
+            {
+                "id":2,
+                "artikel":"Spezi",
+                "preis":2.60
+            },
+            {
+                "id":3,
+                "artikel":"Wasser",
+                "preis":2.00
+            }
+        ]
+    }
+]
